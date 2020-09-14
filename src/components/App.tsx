@@ -15,11 +15,15 @@ interface Data {
 const App: React.FC = () => {
   // defining storage arrays for data
 
-  const [ratingArr, setRatingArr] = useState([])
-  const [titleArr, setTitleArr] = useState([])
-  const [dateArr, setDateArr] = useState([])
-  const [posterArr, setPosterArr] = useState([])
-  const [genreArr, setGenreArr] = useState([])
+  const [dataArr, setDateArr] = useState([{
+    rating:0,
+    title:"",
+    date:"",
+    posterUrl:"",
+    genre:""
+  }
+  ])
+
 
   const getData = (data: Data) => {
     console.log("Data in app:", data)

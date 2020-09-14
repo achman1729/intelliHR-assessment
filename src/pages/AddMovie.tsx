@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import {Redirect} from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom'
 import { Form, FormGroup, Label, Input, Container, Button } from 'reactstrap'
 import moment from 'moment'
 import Axios from 'axios'
-
+import History from 'history'
 interface getData {
   (resData: {
     rating:number, 
@@ -15,6 +15,7 @@ interface getData {
 }
 
 interface addMovieProps {
+  // history: any,
   getData: getData
 }
 
@@ -37,7 +38,7 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
     title: title,
     date: date
   }
-  
+
   // request to omd API
   const apiData = async (t: string) => {
     let formatTitle = t.split(' ').join('+')
@@ -61,7 +62,7 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
     await apiData(title)
     setGenre(data.genre)
     setPosterUrl(data.posterUrl)
-    props.history.push("/")
+    // props.history.push("/")
   }
 
 
