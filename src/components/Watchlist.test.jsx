@@ -1,14 +1,14 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import HelloWorld from './HelloWorld';
+import Watchlist from '../pages/Watchlist';
 
-describe('<HelloWorld />', () => {
+describe('<Watchlist/>', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = mount(
-      <HelloWorld />
+      <Watchlist />
     );
   });
 

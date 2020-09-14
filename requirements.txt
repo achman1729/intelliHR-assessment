@@ -1,0 +1,15 @@
+1. record movies that have been watched
+    1.1 record name of the movies
+    1.2 record date of the movie watched - default to today
+    1.3 record rating of the movie
+    1.4. save the movie in the local storage
+2. see the list of movies that have been watched
+    2.1 list shows name of the movie, watch date, rating
+    2.2 data from omdbapi
+        2.2.1 poster of the movie
+        2.2.2 genre/s of the movie
+3. stats on the movies that have been watched
+    3.1 average rating of the movies given by you
+    3.2 total runtime of the movies watched by you
+    3.3 other stats cool to have(optional)
+        3.3.1 rating from the other sources
