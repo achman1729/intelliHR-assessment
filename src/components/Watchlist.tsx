@@ -3,9 +3,9 @@ import React from 'react'
 interface Data {
     rating:number, 
     title:string, 
-    date: string, 
-    posterUrl: string, 
-    genre: string,
+    date: string,
+    posterUrl: string,
+    genre: string
   }
 
 interface WatchlistProps {
@@ -18,7 +18,12 @@ const Watchlist: React.FC<WatchlistProps>  = (props) => {
     return (
         <div>
             {props.movies.map((item: Data) =>(
-                <li key={item.title}>{item.title}</li>
+                <ol>
+                    <li key={item.title}>{item.title}</li>
+                    <li key={item.rating}>{item.rating}</li>
+                    <li key={item.date}>{item.date}</li>
+
+                </ol>
             ))}
         </div>
     )
