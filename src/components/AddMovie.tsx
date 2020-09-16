@@ -115,4 +115,4 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
   )
 }
 
-export default AddMovie
+export default React.memo(AddMovie)

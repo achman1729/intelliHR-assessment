@@ -53,8 +53,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
     // localStorage.setItem("MovieList", JSON.stringify(movies))
     // ...movies will not add the empty value to MovieList
   }
-  setMovieList([...movies, ...movieList])
-  console.log("Movies from state", movieList)
+  // setMovieList([...movies, ...movieList])
+  // console.log("Movies from state", movieList)
 
 
   // const sortByDate = () => {
@@ -86,4 +86,4 @@ const Dashboard: React.FC<DashboardProps> = () => {
   )
 }
 
-export default Dashboard
+export default React.memo(Dashboard)
