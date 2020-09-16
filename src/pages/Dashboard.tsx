@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Jumbotron, Container, Button } from 'reactstrap'
 import AddMovie from './AddMovie'
 import Watchlist from '../components/Watchlist'
@@ -53,6 +53,13 @@ const Dashboard: React.FC<WatchlistProps> = () => {
       console.log(error)
     })
   }
+
+  useEffect(() => {
+    async function getToken() {
+
+    }
+    getToken();
+ }, [genre])
 
 
   const getData = async(data: FormData) => {
