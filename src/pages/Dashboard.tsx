@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { Jumbotron, Container, Button } from 'reactstrap'
-import AddMovie from './AddMovie'
+import AddMovie from '../components/AddMovie'
 import Watchlist from '../components/Watchlist'
 import '../stylesheets/Watchlist.sass'
 import Axios from 'axios'
@@ -20,11 +20,11 @@ interface FormData {
 }
 
 
-interface WatchlistProps {
+interface DashboardProps {
 
 }
 
-const Dashboard: React.FC<WatchlistProps> = () => {
+const Dashboard: React.FC<DashboardProps> = () => {
   // clear the local storage on first render of the component
   localStorage.clear()
   
@@ -35,54 +35,25 @@ const Dashboard: React.FC<WatchlistProps> = () => {
   let movies: Data[] = []
 
   const [movieList, setMovieList] = useState<Data[]>([])
-  const [posterUrl, setPosterUrl] = useState("")
-  const [genre, setGenre] = useState("")
+  
 
-  // request to omd API
-  const apiData = async (t: string) => {
+  const getData = (data: Data) => {
 
-    let formatTitle = t.split(' ').join('+')
-    
-    await Axios.get(`http://www.omdbapi.com/?apikey=d37e246b&t=${formatTitle}`)
-    .then((response) =>{
-      setGenre(response.data.Genre)
-      setPosterUrl(response.data.Poster)
-      console.log("from apiData",response)
-    })
-    .catch((error) =>{
-      console.log(error)
-    })
-  }
-
-  useEffect(() => {
-    async function getToken() {
-
-    }
-    getToken();
- }, [genre])
-
-
-  const getData = async(data: FormData) => {
-    console.log("call")
-    await apiData(data.title)
-console.log("after call")
     movies.push({
       rating:data.rating,
       title:data.title,
       date:data.date,
-      posterUrl: posterUrl,
-      genre: genre
+      posterUrl: data.posterUrl,
+      genre: data.genre
     })
 
     console.log("Data in getData:", data)
     console.log("MOVIE:", movies)
-    console.log("set item")
-    console.log("poster URL", posterUrl)
-    console.log("genre", genre)
-    localStorage.setItem("MovieList", JSON.stringify(movies))
+    // console.log("set item")
+    // localStorage.setItem("MovieList", JSON.stringify(movies))
     // ...movies will not add the empty value to MovieList
-    setMovieList([...movies, ...movieList])
   }
+  setMovieList([...movies, ...movieList])
   console.log("Movies from state", movieList)
 
 
