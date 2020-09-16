@@ -15,14 +15,14 @@ interface Data {
 const App: React.FC = () => {
   // defining storage arrays for data
 
-  const [dataArr, setDateArr] = useState([{
-    rating:0,
-    title:"",
-    date:"",
-    posterUrl:"",
-    genre:""
-  }
-  ])
+  // const [dataArr, setDateArr] = useState([{
+  //   rating:0,
+  //   title:"",
+  //   date:"",
+  //   posterUrl:"",
+  //   genre:""
+  // }
+  // ])
 
 
   const getData = (data: Data) => {
