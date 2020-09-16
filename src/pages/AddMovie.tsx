@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { Form, FormGroup, Label, Input, Container, Button } from 'reactstrap'
 import moment from 'moment'
 import Axios from 'axios'
-import History from 'history'
+// import History from 'history'
+
 interface getData {
   (resData: {
     rating:number, 
@@ -25,6 +26,8 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
   const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'))
   const [posterUrl, setPosterUrl] = useState("")
   const [genre, setGenre] = useState("")
+  const [count, setCount] = useState(1)
+  const mountedRef = useRef(true)
 
   const data = {
     genre: "",
@@ -45,36 +48,30 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
 
     await Axios.get(`http://www.omdbapi.com/?apikey=d37e246b&t=${formatTitle}`)
     .then((response) =>{
-      console.log("this is from axios:", response.data.Genre)
       data.genre = response.data.Genre
       data.posterUrl = response.data.Poster
-      console.log("this object data:", data)
-      // return response.data
     })
     .catch((error) =>{
       console.log(error)
     })
   }
-
+  
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
-
+    
     await apiData(title)
     setGenre(data.genre)
     setPosterUrl(data.posterUrl)
     // props.history.push("/")
+    props.getData(resData)
   }
-
-
-  console.log("DATA: ", resData)
-  props.getData(resData)
 
   return (
 
-    <Container style={{ marginTop: "100px" }}>
+    <Container style={{ marginTop: "70px", marginBottom: "50px", width:"35vw"}}>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label for=""><h3>Add a new movie</h3></Label>
+          {/* <Label for=""><h3>Add a new movie</h3></Label> */}
         </FormGroup>
         <FormGroup>
           <Label for="movieTitle">Movie Title</Label>
@@ -109,7 +106,11 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
           value={rating} 
           onChange={e => setRating(parseInt(e.target.value))} />
         </FormGroup>
+        {/* <Link to="/"> */}
+
         <Button color="success">Add</Button>
+        {/* </Link> */}
+        
       </Form>
     </Container>
   )

@@ -13,3 +13,4 @@
     3.2 total runtime of the movies watched by you
     3.3 other stats cool to have(optional)
         3.3.1 rating from the other sources
+        3.3.2 most watched genre
