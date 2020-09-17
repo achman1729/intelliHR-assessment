@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Form, FormGroup, Label, Input, Container, Button } from 'reactstrap'
 import moment from 'moment'
 import Axios from 'axios'
+import { useEffect } from 'react'
 
 interface getData {
   (movie: {
@@ -37,16 +38,20 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
       setMovie((prevState) => {
         return { ...prevState, apiData: apiData }
       })
+      // setMovie(movie.apiData= Data)
     })
     .catch((error) =>{
       console.log(error)
     })
   }
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  useEffect(() => {
+    apiData(movie.title)
+  }, [movie.title])
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
-    await apiData(movie.title)
     props.getData(movie)
   }
 
