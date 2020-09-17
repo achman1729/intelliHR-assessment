@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Watchlist from '../pages/Watchlist';
+import Watchlist from './Watchlist';
 
 describe('<Watchlist/>', () => {
   let wrapper;

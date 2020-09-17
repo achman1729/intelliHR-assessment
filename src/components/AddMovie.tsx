@@ -1,43 +1,29 @@
 import React, { useState } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import { Form, FormGroup, Label, Input, Container, Button } from 'reactstrap'
 import moment from 'moment'
 import Axios from 'axios'
-import History from 'history'
+
 interface getData {
-  (resData: {
+  (movie: {
     rating:number, 
     title:string, 
-    date: string, 
-    posterUrl: string, 
-    genre: string
+    date: string,
+    apiData: any[]
   }): void
 }
 
 interface addMovieProps {
-  // history: any,
   getData: getData
 }
 
 const AddMovie: React.FC<addMovieProps> = (props) => {
-  const [rating, setRating] = useState(1)
-  const [title, setTitle] = useState("")
-  const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'))
-  const [posterUrl, setPosterUrl] = useState("")
-  const [genre, setGenre] = useState("")
 
-  const data = {
-    genre: "",
-    posterUrl: "",
-  }
-
-  const resData = {
-    genre: genre,
-    posterUrl: posterUrl,
-    rating: rating,
-    title: title,
-    date: date
-  }
+  const [movie, setMovie] = useState({
+      rating:0,
+      title:"",
+      date:moment(new Date()).format('YYYY-MM-DD'),
+      apiData:[]
+  })
 
   // request to omd API
   const apiData = async (t: string) => {
@@ -45,11 +31,12 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
 
     await Axios.get(`http://www.omdbapi.com/?apikey=d37e246b&t=${formatTitle}`)
     .then((response) =>{
-      console.log("this is from axios:", response.data.Genre)
-      data.genre = response.data.Genre
-      data.posterUrl = response.data.Poster
-      console.log("this object data:", data)
-      // return response.data
+      console.log("this is from axios:", response.data)
+      let apiData = response.data
+
+      setMovie((prevState) => {
+        return { ...prevState, apiData: apiData }
+      })
     })
     .catch((error) =>{
       console.log(error)
@@ -59,23 +46,35 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 
-    await apiData(title)
-    setGenre(data.genre)
-    setPosterUrl(data.posterUrl)
-    // props.history.push("/")
+    await apiData(movie.title)
+    props.getData(movie)
   }
 
+  const handleTitle = (e: any) => {
+    let title = e.target.value;
+    setMovie((prevState) => {
+      return { ...prevState, title: title }
+    })
+  }
+  const handleDate = (e: any) => {
+    let date = e.target.value;
+    setMovie((prevState) => {
+      return { ...prevState, date: date }
+    })
+  }
+  const handleRating = (e: any) => {
+    let rating: number = parseInt(e.target.value);
+    setMovie((prevState) => {
+      return { ...prevState, rating: rating }
+    })
+  }
 
-  console.log("DATA: ", resData)
-  props.getData(resData)
+  // console.log("Movie data in add movie", movie)
 
   return (
 
-    <Container style={{ marginTop: "100px" }}>
+    <Container style={{ marginTop: "50px", marginBottom: "30px"}}>
       <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label for=""><h3>Add a new movie</h3></Label>
-        </FormGroup>
         <FormGroup>
           <Label for="movieTitle">Movie Title</Label>
           <Input
@@ -83,8 +82,8 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
             name="title"
             id="title"
             placeholder="e.g. Iron Man"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
+            value={movie.title}
+            onChange={handleTitle}
           />
         </FormGroup>
         <FormGroup>
@@ -94,20 +93,20 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
             name="date"
             id="Date"
             placeholder="date placeholder"
-            value={date}
-            onChange={e => setDate(e.target.value)}
+            value={movie.date}
+            onChange={handleDate}
           />
         </FormGroup>
         <FormGroup>
-          <Label for="rating">Rating: {rating}</Label>
+          <Label for="rating">Rating: {movie.rating}</Label>
           <Input 
           type="range" 
           id="movieRating" 
           name="rating" 
           min="0" 
           max="5" 
-          value={rating} 
-          onChange={e => setRating(parseInt(e.target.value))} />
+          value={movie.rating} 
+          onChange={handleRating} />
         </FormGroup>
         <Button color="success">Add</Button>
       </Form>
