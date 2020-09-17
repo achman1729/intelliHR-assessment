@@ -1,73 +1,38 @@
 import React, { useState } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import { Form, FormGroup, Label, Input, Container, Button } from 'reactstrap'
-import moment from 'moment'
-import Axios from 'axios'
-import History from 'history'
-interface getData {
-  (resData: {
-    rating:number, 
-    title:string, 
-    date: string, 
-    posterUrl: string, 
-    genre: string
-  }): void
-}
+
+// interface getData {
+//   (resData: {
+//     rating:number, 
+//     title:string, 
+//     date: string, 
+//     posterUrl: string, 
+//     genre: string
+//   }): void
+// }
 
 interface addMovieProps {
   // history: any,
-  getData: getData
+  // getData: getData
+  handleTitle: any,
+  handleDate: any,
+  handleRating: any,
+  handleSubmit: any,
+  rating: number,
+  title: string,
+  date: string
+
 }
 
-const AddMovie: React.FC<addMovieProps> = (props) => {
-  const [rating, setRating] = useState(1)
-  const [title, setTitle] = useState("")
-  const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'))
-  const [posterUrl, setPosterUrl] = useState("")
-  const [genre, setGenre] = useState("")
-
-  const data = {
-    genre: "",
-    posterUrl: "",
-  }
-
-  const resData = {
-    genre: genre,
-    posterUrl: posterUrl,
-    rating: rating,
-    title: title,
-    date: date
-  }
-
-  // request to omd API
-  const apiData = async (t: string) => {
-    let formatTitle = t.split(' ').join('+')
-
-    await Axios.get(`http://www.omdbapi.com/?apikey=d37e246b&t=${formatTitle}`)
-    .then((response) =>{
-      console.log("this is from axios:", response.data.Genre)
-      data.genre = response.data.Genre
-      data.posterUrl = response.data.Poster
-      console.log("this object data:", data)
-      // return response.data
-    })
-    .catch((error) =>{
-      console.log(error)
-    })
-  }
-
-  const handleSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
-
-    await apiData(title)
-    setGenre(data.genre)
-    setPosterUrl(data.posterUrl)
-    // props.history.push("/")
-  }
-
-
-  console.log("DATA: ", resData)
-  props.getData(resData)
+const AddMovie: React.FC<addMovieProps> = ({
+  handleTitle, 
+  handleDate, 
+  handleRating, 
+  handleSubmit,
+  rating,
+  title,
+  date 
+}) => {
 
   return (
 
@@ -84,7 +49,7 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
             id="title"
             placeholder="e.g. Iron Man"
             value={title}
-            onChange={e => setTitle(e.target.value)}
+            onChange={handleTitle}
           />
         </FormGroup>
         <FormGroup>
@@ -95,7 +60,7 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
             id="Date"
             placeholder="date placeholder"
             value={date}
-            onChange={e => setDate(e.target.value)}
+            onChange={handleDate}
           />
         </FormGroup>
         <FormGroup>
@@ -105,9 +70,9 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
           id="movieRating" 
           name="rating" 
           min="0" 
-          max="5" 
+          max="5"
           value={rating} 
-          onChange={e => setRating(parseInt(e.target.value))} />
+          onChange={handleRating} />
         </FormGroup>
         <Button color="success">Add</Button>
       </Form>
