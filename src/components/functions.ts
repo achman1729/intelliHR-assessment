@@ -1,8 +1,12 @@
 
 
 export const stringToNumber = (runtime: string): number => {
-    let strNum: string[]
-    strNum = runtime.split(" ")
+    let strNum: string[] = ['']
+    if(runtime)
+    {
+      strNum = runtime.split(" ")
+
+    }
     return parseInt(strNum[0])
   }
 

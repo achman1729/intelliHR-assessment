@@ -13,3 +13,5 @@
     3.2 total runtime of the movies watched by you
     3.3 other stats cool to have(optional)
         3.3.1 rating from the other sources
+
+        Shows the name of any movie you enter despite it's out there or not
