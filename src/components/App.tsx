@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Jumbotron, Container, Button } from 'reactstrap'
 import AddMovie from './AddMovie'
 import Watchlist from './Watchlist'
+import {stringToNumber, mostWatchedGenre} from './functions'
 
 interface Data {
   rating: number,
@@ -15,41 +16,6 @@ const moviesArr: Data[] = []
 let avgRating: number = 0
 let totalRuntime: number = 0
 let mWGenre: string = ''
-
-
-const stringToNumber = (runtime: string): number => {
-  let strNum: string[]
-  strNum = runtime.split(" ")
-  return parseInt(strNum[0])
-}
-
-const mostWatchedGenre = (genres: string[]): string => {
-  let arr = genres.join()
-
-  let splitArr = arr.split(",")
-
-  // let current: number = 0;
-  let max: number = 0;
-  let mostCommonGenre: string = "";
-  let i: number;
-
-  for (i = 0; i < splitArr.length - 1; i++) {
-    let current: number = 1;
-    let j: number;
-
-    for (j = i + 1; j < splitArr.length; j++) {
-      if (splitArr[i] === splitArr[j]) {
-        current++;
-      }
-    }
-    if (current > max) {
-      max = current;
-      mostCommonGenre = splitArr[i];
-    }
-  }
-  return mostCommonGenre;
-}
-
 
 localStorage.clear()
 
