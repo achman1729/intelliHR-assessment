@@ -1,7 +1,6 @@
 import moment from 'moment'
 import React, {useState, useEffect} from 'react'
 import { Button, Table } from 'reactstrap'
-import '../stylesheets/Watchlist.sass'
 
 let movieList: any
 

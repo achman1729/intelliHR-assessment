@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Jumbotron, Container, Button } from 'reactstrap'
+import { Jumbotron, Container} from 'reactstrap'
 import AddMovie from './AddMovie'
 import Watchlist from './Watchlist'
-import {stringToNumber, mostWatchedGenre} from './functions'
+import { stringToNumber, mostWatchedGenre } from './functions'
 
 interface Data {
   rating: number,
@@ -22,6 +22,8 @@ localStorage.clear()
 const App: React.FC = () => {
   const [reload, setReload] = useState(false)
 
+
+  // retrieving from local storage for data to persist
   let avgRatingList = localStorage.getItem("AvgRating")
   if (avgRatingList) {
     avgRating = JSON.parse(avgRatingList)
@@ -30,6 +32,11 @@ const App: React.FC = () => {
   let totalRuntimeList = localStorage.getItem("TotalRuntime")
   if (totalRuntimeList) {
     totalRuntime = JSON.parse(totalRuntimeList)
+  }
+
+  let mWGenreList = localStorage.getItem("AllGenres")
+  if (mWGenreList) {
+    mWGenre = JSON.parse(mWGenreList)
   }
 
   // getting data from AddMovie component
@@ -69,6 +76,7 @@ const App: React.FC = () => {
     console.log("average rating: ", avgRating)
 
     localStorage.setItem("AvgRating", JSON.stringify(avgRating))
+    localStorage.setItem("AllGenres", JSON.stringify(mWGenre))
   }
 
   useEffect(() => {
@@ -87,7 +95,11 @@ const App: React.FC = () => {
             <span><strong>Avg. rating: </strong>{avgRating.toFixed(1)} </span>
           }
           <span><strong>Total runtime watched:</strong> {totalRuntime} mins</span>
-          <span><strong>Most watched Genre:</strong> {mWGenre}</span>
+          {mWGenre === "" ?
+            <span><strong>Most watched Genre:</strong> --- </span>
+            :
+            <span><strong>Most watched Genre:</strong> {mWGenre}</span>
+          }
         </Container>
       </Jumbotron>
       <AddMovie getData={getData} />
