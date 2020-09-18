@@ -1,13 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Jumbotron, Container, Button } from 'reactstrap'
-<<<<<<< HEAD
-// import AddMovie from './AddMovie'
-// import Watchlist from './Watchlist'
-=======
 import AddMovie from './AddMovie'
 import Watchlist from './Watchlist'
->>>>>>> d043e81
-import { useState } from 'react'
 
 interface Data {
   rating: number,
