@@ -14,13 +14,42 @@ const moviesArr: Data[] = []
 
 let avgRating: number = 0
 let totalRuntime: number = 0
-let mostWatchedGenre: string[] = []
+let mWGenre: string = ''
+
 
 const stringToNumber = (runtime: string): number => {
   let strNum: string[]
   strNum = runtime.split(" ")
   return parseInt(strNum[0])
 }
+
+const mostWatchedGenre = (genres: string[]): string => {
+  let arr = genres.join()
+
+  let splitArr = arr.split(",")
+
+  // let current: number = 0;
+  let max: number = 0;
+  let mostCommonGenre: string = "";
+  let i: number;
+
+  for (i = 0; i < splitArr.length - 1; i++) {
+    let current: number = 1;
+    let j: number;
+
+    for (j = i + 1; j < splitArr.length; j++) {
+      if (splitArr[i] === splitArr[j]) {
+        current++;
+      }
+    }
+    if (current > max) {
+      max = current;
+      mostCommonGenre = splitArr[i];
+    }
+  }
+  return mostCommonGenre;
+}
+
 
 localStorage.clear()
 
@@ -52,21 +81,27 @@ const App: React.FC = () => {
 
     let ratingSum: number = 0
     totalRuntime = 0
+    let allMovieGenres: string[] = []
+
+
     moviesArr.map((item: any) => {
       if (moviesArr.length > 0) {
         ratingSum += item.rating
 
-        // console.log("movvie array length: ", moviesArr.length, item.rating)
-        
         totalRuntime += stringToNumber(item.apiData.Runtime)
-        
-        mostWatchedGenre.push(item.apiData.Genre)
+
+        allMovieGenres.push(item.apiData.Genre)
+
+        console.log("all genres: ", allMovieGenres)
 
         localStorage.setItem("TotalRuntime", JSON.stringify(totalRuntime))
       }
     })
+    mWGenre = mostWatchedGenre(allMovieGenres)
+    console.log("most Watched Genre", mWGenre)
     avgRating = ratingSum / moviesArr.length
     console.log("average rating: ", avgRating)
+
     localStorage.setItem("AvgRating", JSON.stringify(avgRating))
   }
 
@@ -86,6 +121,7 @@ const App: React.FC = () => {
             <span><strong>Avg. rating: </strong>{avgRating.toFixed(1)} </span>
           }
           <span><strong>Total runtime watched:</strong> {totalRuntime} mins</span>
+          <span><strong>Most watched Genre:</strong> {mWGenre}</span>
         </Container>
       </Jumbotron>
       <AddMovie getData={getData} />
