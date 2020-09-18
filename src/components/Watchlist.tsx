@@ -52,18 +52,19 @@ const Watchlist: React.FC = () => {
   
   return (
     <div>
-      <div className="filters">
+      <div className="filters" style={{display:"flex", justifyContent:"flex-end",  marginLeft: "30px" }}>
         <Button color="info" onClick={sortByDate}  style={{marginLeft: "30px" }}>Sort by Date</Button>
-        <Button color="secondary" onClick={sortByRating} style={{marginLeft: "30px" }}>Sort by Rating</Button>
+        <Button color="secondary" onClick={sortByRating} style={{marginLeft: "30px", marginRight: "3vw" }}>Sort by Rating</Button>
       </div>
 
-      <Table borderless>
+      <Table borderless style={{marginLeft: "30px", width: "60vw"}}>
         <thead>
           <tr>
             <th></th>
             <th></th>
           </tr>
         </thead>
+        {movieList ?
         <tbody>
           {
           movieList.length === 0 ? <span>No movies added</span>
@@ -83,9 +84,10 @@ const Watchlist: React.FC = () => {
             ))
           }
         </tbody>
+        : ''
+      }
       </Table>
     </div>
-
   )
 }
 

@@ -78,7 +78,7 @@ const AddMovie: React.FC<addMovieProps> = (props) => {
 
   return (
 
-    <Container style={{ marginTop: "50px", marginBottom: "30px"}}>
+    <Container style={{ marginTop: "50px", marginBottom: "30px", width: "30vw" }}>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="movieTitle">Movie Title</Label>
